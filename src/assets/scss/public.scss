@@ -1,0 +1,15 @@
+.page-title{
+    font-weight: 400;
+    &:before {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: #007bff;
+    margin-right: .5em;
+    }
+  }
+
+.modal {
+    // display: block;
+}
