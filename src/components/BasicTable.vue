@@ -13,34 +13,49 @@
     <template v-else-if="table.status === 'success'">
       <!-- {{checkedAll}} {{ checkedValue }} -->
       <div class="btn-group toolbar" role="group">
-        <button v-if="checkedValue.length > 0" type="button" class="btn btn-info" @click="openModel">刪除</button>
+        <button
+          v-if="checkedValue.length > 0"
+          type="button"
+          class="btn btn-info"
+          @click="openModel"
+        >刪除</button>
         <button type="button" class="btn btn-info" @click="openModelType('add')">新增</button>
       </div>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th v-if="config.multipleCheckboxes" class="checkbox-column">
-              <input type="checkbox" id="checkedAll" v-model="checkedAll" @change="selectedAll">
+              <input type="checkbox" id="checkedAll" v-model="checkedAll" @change="selectedAll" />
             </th>
             <template v-for="(itemField, i) in config.fieldInfo">
-              <th :key="i" v-if=itemField.isShow> {{ itemField.label }}</th>
+              <th :key="i" v-if="itemField.isShow">{{ itemField.label }}</th>
             </template>
-            <th v-if="config.buttonAction" class="action-column">Action </th>
+            <th v-if="config.buttonAction" class="action-column">Action</th>
           </tr>
         </thead>
         <tbody v-if="table.content.length > 0">
           <tr v-for="(item, i) in table.content" :key="i">
             <td v-if="config.multipleCheckboxes">
-              <input type="checkbox" name="tableCheckbox" :value="item[config.key]" v-model="checkedValue" @change="selected">
+              <input
+                type="checkbox"
+                name="tableCheckbox"
+                :value="item[config.key]"
+                v-model="checkedValue"
+                @change="selected"
+              />
             </td>
             <template v-for="(field, index) in config.fieldInfo">
-              <td :key="index" v-if="field.isShow">
-                {{ item[field.value] }}
-              </td>
+              <td :key="index" v-if="field.isShow">{{ item[field.value] }}</td>
             </template>
             <td v-if="config.buttonAction" class="action-column">
-              <div class="btn-group btn-group-sm " role="group">
-                <button v-for="(btnItem, index) in config.buttonAction" :key="index" type="button" class="btn btn-secondary" :data-type="btnItem">{{btnItem}}</button>
+              <div class="btn-group btn-group-sm" role="group">
+                <button
+                  v-for="(btnItem, index) in config.buttonAction"
+                  :key="index"
+                  type="button"
+                  class="btn btn-secondary"
+                  :data-type="btnItem"
+                >{{btnItem}}</button>
               </div>
             </td>
           </tr>
@@ -64,14 +79,13 @@
             <li class="page-item disabled">
               <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
-            <li v-for="(item, i) in table.totalPages" 
-                class="page-item"
-                :key="i"
-                :class="{'active': table.pageable.pageNumber === i}"
-              >
-              <a class="page-link" href="javascript:void(0)">
-                {{ i+1 }}
-              </a>
+            <li
+              v-for="(item, i) in table.totalPages"
+              class="page-item"
+              :key="i"
+              :class="{'active': table.pageable.pageNumber === i}"
+            >
+              <a class="page-link" href="javascript:void(0)">{{ i+1 }}</a>
             </li>
             <li class="page-item">
               <a class="page-link" href="javascript:void(0)">Next</a>
@@ -88,37 +102,38 @@
 
     <!-- delete action -->
     <Modal :id="deleteAction">
-      <template v-slot:header><h5>刪除</h5></template>
+      <template v-slot:header>
+        <h5>刪除</h5>
+      </template>
       <p>您是否確定要刪除此項目</p>
       <template v-slot:footer>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary">確認</button>
       </template>
     </Modal>
-    
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
-import Modal from '@/components/Modal.vue'
+import $ from 'jquery';
+import Modal from '@/components/Modal.vue';
 
 export default {
-  name: "BasicTable",
-  props: ["table", "config"],
+  name: 'BasicTable',
+  props: ['table', 'config'],
   components: {
     Modal
   },
-  data() {
+  data () {
     return {
       checkedAll: false, // 全選 true/false
       checkedArr: [],
       checkedValue: [], // checkboxs 選中的
       deleteAction: 'deleteAction'
-    }
+    };
   },
   methods: {
-    selectedAll() {
+    selectedAll () {
       this.checkedValue = [];
       let getKey = this.config.key;
       if (this.checkedAll) {
@@ -127,41 +142,39 @@ export default {
         }
       }
     },
-    selected() {
+    selected () {
       this.checkedAll = false;
     },
-    openModel() {
+    openModel () {
       $('#deleteAction').modal('show');
     },
-    openModelType(type) {
+    openModelType (type) {
       this.$emit('modelType', type);
     }
-    
   }
-  
 };
 </script>
 
 <style scoped lang="scss">
-  .table {
-    font-size: 13px;
-    .checkbox-column {
-      width: 15px;
-    }
-    .action-column {
-      width: 100px;
-      padding: 0 12px;
-      vertical-align: middle;
-    }
+.table {
+  font-size: 13px;
+  .checkbox-column {
+    width: 15px;
   }
-  .no-data {
-    &:hover {
-      background-color: transparent;
-    }
+  .action-column {
+    width: 100px;
+    padding: 0 12px;
+    vertical-align: middle;
   }
-  .toolbar {
-    display: block;
-    text-align: right;
-    margin-bottom: .5em;
+}
+.no-data {
+  &:hover {
+    background-color: transparent;
   }
+}
+.toolbar {
+  display: block;
+  text-align: right;
+  margin-bottom: 0.5em;
+}
 </style>

@@ -22,7 +22,6 @@
   </div>
 </template>
 
-
 <style lang="scss">
     .login {
         background: url('../assets/login_background.jpg') no-repeat center;

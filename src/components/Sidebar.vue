@@ -8,32 +8,32 @@
 import Menu from '@/components/Menu.vue'
 export default {
   name: 'Sidebar',
-    data () {
+  data () {
     return {
-        nav: [{
-          text: 'Home',
-          path: null,
-          children: [{
-            text: 'Home-1',
-            path: '/datatable',
-            children: null
-          },{
-            text: 'Home-2',
-            path: '/about',
-            children: null
-          }],
-        },{
-          text: 'About',
+      nav: [{
+        text: 'Home',
+        path: null,
+        children: [{
+          text: 'Home-1',
+          path: '/datatable',
+          children: null
+        }, {
+          text: 'Home-2',
           path: '/about',
           children: null
-        },{
-          text: 'Item1',
-          path: '/about',
-          children: null
-        },{
-          text: 'Item2',
-          path: '/about',
-          children: null
+        }]
+      }, {
+        text: 'About',
+        path: '/about',
+        children: null
+      }, {
+        text: 'Item1',
+        path: '/about',
+        children: null
+      }, {
+        text: 'Item2',
+        path: '/about',
+        children: null
       }]
     }
   },

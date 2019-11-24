@@ -5,7 +5,7 @@
     </div> -->
     <header>
       <div class="logo-bar">
-        <div class="logo">LOGO</div>
+        <div class="logo"> LOGO </div>
       </div>
       <div class="header text-right">
         <ul>
@@ -22,33 +22,33 @@ export default {
   name: 'Header',
   data () {
     return {
-        nav: [{
-          text: 'Home',
-          path: null,
-          children: [{
-            text: 'Home-1',
-            path: '/',
-            children: null
-          },{
-            text: 'Home-2',
-            path: '/about',
-            children: null
-          }],
-        },{
-          text: 'About',
+      nav: [{
+        text: 'Home',
+        path: null,
+        children: [{
+          text: 'Home-1',
+          path: '/',
+          children: null
+        }, {
+          text: 'Home-2',
           path: '/about',
           children: null
-        },{
-          text: 'Item1',
-          path: '/about',
-          children: null
-        },{
-          text: 'Item2',
-          path: '/about',
-          children: null
+        }]
+      }, {
+        text: 'About',
+        path: '/about',
+        children: null
+      }, {
+        text: 'Item1',
+        path: '/about',
+        children: null
+      }, {
+        text: 'Item2',
+        path: '/about',
+        children: null
       }]
     }
-  },
+  }
 
 }
 </script>

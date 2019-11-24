@@ -21,10 +21,10 @@
 </template>
 
 <script>
-    import Menu from '@/components/Menu.vue'
+// import Menu from '@/components/Menu.vue'
 
-    export default {
-        name: 'Modal',
-        props: ['id'],
-    }
+export default {
+  name: 'Modal',
+  props: ['id']
+}
 </script>

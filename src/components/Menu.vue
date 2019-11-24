@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <ul>
-            <li 
+            <li
                 v-for="(item, i) in nav"
                 :key="i">
                 <template v-if="!item.children">
@@ -17,19 +17,19 @@
 </template>
 
 <script>
-    import Menu from '@/components/Menu.vue'
+import Menu from '@/components/Menu.vue'
 
-    export default {
-        name: 'Menu',
-        props: ['nav'],
-        components: {
-            Menu
-        }
-    }
+export default {
+  name: 'Menu',
+  props: ['nav'],
+  components: {
+    Menu
+  }
+}
 </script>
 
 <style scoped lang="scss">
-ul, li {
-    list-style: none;
-}
+  ul, li {
+      list-style: none;
+  }
 </style>
