@@ -52,9 +52,10 @@
 // @ is an alias to /src
 import BasicTable from '@/components/BasicTable.vue';
 import Modal from '@/components/Modal.vue';
-import axios from 'axios';
+// import axios from 'axios';
 import $ from 'jquery';
 import TableFilderInfo from '@/assets/json/dataTable/filderInfo.json';
+import { apiUtils } from '@/utils/apiUtils';
 
 export default {
   name: 'Datatable',
@@ -90,19 +91,23 @@ export default {
   },
   methods: {
     getInitData () {
-      let path = '//77bed619.ngrok.io';
-      axios
-        .get(
-          `${path}/api/authuser/getAuthUserList?page=0&size=10&sort=empNo,desc`
-        )
-        .then(res => {
-          this.table = Object.assign({}, res.data);
-          this.table.status = res.data.status ? res.data.status : 'success';
-        })
-        .catch(err => {
-          alert('網路發生錯誤');
-          console.log(err);
-        });
+      // let path = '//localhost:9090/';
+      // axios
+      //   .get(
+      //     `${path}/api/authuser/getAuthUserList?page=0&size=10&sort=empNo,desc`
+      //   )
+      //   .then(res => {
+      //     this.table = Object.assign({}, res.data);
+      //     this.table.status = res.data.status ? res.data.status : 'success';
+      //   })
+      //   .catch(err => {
+      //     alert('網路發生錯誤');
+      //     console.log(err);
+      //   });
+      apiUtils.get('/giauthuser/getAuthUserList?page=0&size=10&sort=empNo,desc', {}, r => {
+        // 接收成功
+        console.log('r', r)
+      })
     },
     openModelType (type) {
       this.modalInfo.isShow = true;
