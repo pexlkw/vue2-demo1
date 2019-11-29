@@ -7,7 +7,7 @@
     "value":"userAccount",
     "label":"帳號",
     "isShow": true,
-    "editRequire": true 
+    "editRequire": true
 },{
     "value":"displayName",
     "label":"名稱",

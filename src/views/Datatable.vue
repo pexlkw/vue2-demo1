@@ -6,14 +6,14 @@
         <form>
           <div class="form-group row">
             <div class="col-sm-6">
-              <label for="name">姓名</label>
-              <input type="text" class="form-control" id="name" placeholder="Example input" />
+              <label for="name">帳號</label>
+              <input type="text" class="form-control" id="userAccount" />
             </div>
             <div class="col-sm-6">
-              <label for="idNo">員工編號</label>
-              <input type="text" class="form-control" id="idNo" placeholder="Example input" />
+              <label for="idNo">名稱</label>
+              <input type="text" class="form-control" id="displayName" />
             </div>
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
               <label for="deparment">部門</label>
               <select class="custom-select" id="deparment">
                 <option selected>Open this select menu</option>
@@ -21,7 +21,7 @@
                 <option value="2">工程部</option>
                 <option value="3">人事部</option>
               </select>
-            </div>
+            </div> -->
           </div>
           <div class="btn-box text-center">
             <button class="btn btn-primary" type="button">submit</button>
@@ -31,7 +31,11 @@
     </section>
     <section class="card">
       <div class="card-body">
-        <BasicTable :table="table" :config="config" @modelType="openModelType" />
+        <BasicTable
+          :table="table"
+          :config="config"
+          @modelType="openModelType"
+          @conditionParem="searchAction" />
       </div>
     </section>
     <!-- model content: add/edit/view -->
@@ -55,7 +59,7 @@ import Modal from '@/components/Modal.vue';
 // import axios from 'axios';
 import $ from 'jquery';
 import TableFilderInfo from '@/assets/json/dataTable/filderInfo.json';
-import { apiUtils } from '@/utils/apiUtils';
+// import { apiUtils } from '@/assets/js/utils/apiUtils'; // ajax
 
 export default {
   name: 'Datatable',
@@ -72,8 +76,11 @@ export default {
         buttonAction: ['view', 'copy', 'edit', 'delete'], // array(edit, delete, view) or null
         pageType: 'pagination', // pagination or autoload 頁數呈現
         key: 'userId',
-        fieldInfo: TableFilderInfo // 欄位名稱
+        fieldInfo: TableFilderInfo, // 欄位名稱,
+        searchApiPath: '/authuser/getAuthUserList?size=10',
+        condition: null
       },
+      conditionParems: null,
       modalInfo: {
         // popup 設定
         isShow: false,
@@ -87,33 +94,29 @@ export default {
     };
   },
   mounted () {
-    this.getInitData();
+    this.conditionParems = {
+      page: 0,
+      size: 10,
+      sort: 'empNo,desc'
+    }
+    this.getData(this.conditionParems);
   },
   methods: {
-    getInitData () {
-      // let path = '//localhost:9090/';
-      // axios
-      //   .get(
-      //     `${path}/api/authuser/getAuthUserList?page=0&size=10&sort=empNo,desc`
-      //   )
-      //   .then(res => {
-      //     this.table = Object.assign({}, res.data);
-      //     this.table.status = res.data.status ? res.data.status : 'success';
-      //   })
-      //   .catch(err => {
-      //     alert('網路發生錯誤');
-      //     console.log(err);
-      //   });
-      apiUtils.get('/giauthuser/getAuthUserList?page=0&size=10&sort=empNo,desc', {}, r => {
+    getData (parems) { // page=0&size=10&sort=empNo,desc
+      this.$apiUtils.get('/authuser/getAuthUserList', parems, resp => {
         // 接收成功
-        console.log('r', r)
-      })
+        this.table = Object.assign({}, resp);
+        this.table.status = resp.status ? resp.status : 'success';
+      });
     },
     openModelType (type) {
       this.modalInfo.isShow = true;
       this.modalInfo.type = type;
     },
-    tabsAction () {}
+    searchAction (getParem) {
+      const parems = Object.assign({}, this.conditionParems, getParem);
+      this.getData(parems);
+    }
   },
   updated () {
     if (this.modalInfo.isShow) {

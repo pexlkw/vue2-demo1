@@ -1,5 +1,6 @@
 <template>
   <div class="basic-table">
+    <!-- {{ table }} -->
     <template v-if="!table">
       <!-- 資料尚未取得時 (ajax 尚未回來) -->
       <div class="d-flex justify-content-center">
@@ -73,11 +74,14 @@
 
       <!-- 頁數 -->
       <div class="row" v-if="config.pageType === 'pagination'">
-        <div class="col-xs-12 col-sm-12 col-md-5">{{ table.totalElements }} records</div>
+        <div class="col-xs-12 col-sm-12 col-md-5">共 {{ table.totalElements }} 筆</div>
         <div class="col-xs-12 col-sm-12 col-md-7">
           <ul class="pagination justify-content-end">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            <li
+              class="page-item"
+              :class="{'disabled': table.pageable.pageNumber === 0}"
+              @click="setParem('page', table.pageable.pageNumber-1)">
+              <a class="page-link" href="javascript:void(0)" tabindex="-1">Previous</a>
             </li>
             <li
               v-for="(item, i) in table.totalPages"
@@ -85,10 +89,10 @@
               :key="i"
               :class="{'active': table.pageable.pageNumber === i}"
             >
-              <a class="page-link" href="javascript:void(0)">{{ i+1 }}</a>
+              <a class="page-link" href="javascript:void(0)" @click="setParem('page', i)">{{ i+1 }}</a>
             </li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0)">Next</a>
+            <li class="page-item" :class="{'disabled': table.totalPages === table.pageable.pageNumber+1}">
+              <a class="page-link" href="javascript:void(0)" @click="setParem('page', table.pageable.pageNumber+1)">Next</a>
             </li>
           </ul>
         </div>
@@ -129,7 +133,8 @@ export default {
       checkedAll: false, // 全選 true/false
       checkedArr: [],
       checkedValue: [], // checkboxs 選中的
-      deleteAction: 'deleteAction'
+      deleteAction: 'deleteAction',
+      tableData: this.table
     };
   },
   methods: {
@@ -150,6 +155,17 @@ export default {
     },
     openModelType (type) {
       this.$emit('modelType', type);
+    },
+    setParem (type, parems) {
+      let getParem = {};
+      switch (type) {
+        case 'page':
+          getParem = {
+            'page': parems
+          }
+          break;
+      }
+      this.$emit('conditionParem', getParem);
     }
   }
 };
