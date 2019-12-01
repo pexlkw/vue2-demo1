@@ -45,6 +45,12 @@ let errorFunction = error => {
     return Promise.reject(error.response);
   }
 }
+let requestPrepare = config => {
+  config.headers.Authorization = 'parseToken.token_type +" "+ parseToken.access_token;'
+  return config
+}
+
+axiosInstanceApi.interceptors.request.use(requestPrepare)
 axiosInstanceApi.interceptors.response.use(finishFunction, errorFunction)
 
 export const apiUtils = {
