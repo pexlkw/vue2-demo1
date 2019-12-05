@@ -5,7 +5,7 @@ export function getToken () {
 }
 
 export function setToken (parseToken) {
-  const tokenValue = `${parseToken.token_type} ${parseToken.access_token}`;
+  const tokenValue = `${parseToken.type} ${parseToken.token}`;
   return localStorage.setItem(tokenKey, tokenValue);
 }
 

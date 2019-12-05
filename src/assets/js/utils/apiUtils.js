@@ -3,7 +3,7 @@ import { getToken } from './auth';
 
 let config = {
   timeout: 60 * 1000, // Timeout
-  baseURL: '//08ef4fc4.ngrok.io/api'
+  baseURL: '//b7e7e995.ngrok.io/api'
   // withCredentials: true// Check cross-site Access-Control
   // 跨域處理
 }

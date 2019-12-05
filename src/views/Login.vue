@@ -15,7 +15,7 @@
             <div id="formFooter" class="text-right">
               <a class="underlineHover" href="#">Forgot Password?</a>
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-success" @click="handleLogin">Submit</button>
         </form>
     </div>
 
@@ -23,20 +23,26 @@
 </template>
 
 <script>
-import { setToken } from '@/assets/js/utils/auth';
 
 export default {
   name: 'Login',
   data () {
-    return ''
+    return {
+      loading: false,
+      redirect: null
+    }
   },
   methods: {
-    // handleLogin () {}, // login click event
+    handleLogin () {
+      this.sendEvent();
+    }, // login click event
     // validEvent () {}, // 檢核
-    sendEvent (parems) {
-      this.$apiUtils.post('/auth/signin', parems, resp => {
-          setToken(resp); // 成功登入,塞值到 storage
-      });
+    sendEvent () {
+      const params = {
+        userAccount: 'ADMIN',
+        password: 'welcome1'
+      }
+      this.$store.dispatch('Login', params);
     }
   }
 }
