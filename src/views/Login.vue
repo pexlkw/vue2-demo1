@@ -42,7 +42,9 @@ export default {
         userAccount: 'ADMIN',
         password: 'welcome1'
       }
-      this.$store.dispatch('Login', params);
+      this.$store.dispatch('Login', params).then(() => {
+        this.$router.push(this.$route.query.redirect || '/'); // 回到上一頁或是首頁
+      });
     }
   }
 }
