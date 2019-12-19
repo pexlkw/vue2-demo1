@@ -2,15 +2,15 @@
   <div class="login">
     <div class="card">
         <h1>LOGIN <span>VEGETABLES</span></h1>
-        <form>
+        <form >
             <div class="form-group text-left">
               <label for="exampleInputEmail1 ">帳號</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <input ref="userAccount" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
               <small id="emailHelp" class="form-text text-muted">請輸入你的E-mail.</small>
             </div>
             <div class="form-group text-left">
               <label for="exampleInputPassword1">密碼</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <input ref="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
             <div id="formFooter" class="text-right">
               <a class="underlineHover" href="#">Forgot Password?</a>
@@ -38,9 +38,10 @@ export default {
     }, // login click event
     // validEvent () {}, // 檢核
     sendEvent () {
+      console.log('aa');
       const params = {
-        userAccount: 'ADMIN',
-        password: 'welcome1'
+        userAccount: this.$refs.userAccount.value, // 'ADMIN'
+        password: this.$refs.password.value // 'welcome1'
       }
       this.$store.dispatch('Login', params).then(() => {
         this.$router.push(this.$route.query.redirect || '/'); // 回到上一頁或是首頁

@@ -3,8 +3,7 @@ import { getToken } from './auth';
 
 let config = {
   timeout: 60 * 1000, // Timeout
-  // baseURL: '//b7e7e995.ngrok.io/api'
-  baseURL: '//localhost:8080/api'
+  baseURL: '//127.0.0.1:9090/api'
   // withCredentials: true// Check cross-site Access-Control
   // 跨域處理
 }
@@ -16,6 +15,7 @@ let finishFunction = response => {
   return response
 }
 let errorFunction = error => {
+  console.log('error111ß', error);
   if (error.response.status) {
     switch (error.response.status) {
       // 401: 未登录
@@ -39,7 +39,7 @@ let errorFunction = error => {
         alert(error.message)
         break
       default:
-        console.log(error.message);
+        console.log('a', error.message, error.status);
         // alert(error.message)
         break
     }
@@ -47,7 +47,6 @@ let errorFunction = error => {
   }
 }
 let requestPrepare = config => {
-  // config.headers.Authorization = 'parseToken.token_type +" "+ parseToken.access_token;'
   config.headers.Authorization = getToken();
   return config;
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="sidebar" class="side-bar">
-    <div class="side-bar__title">Menu ...</div>
-    <Menu :nav="nav" />
+    <!-- <div class="side-bar__title">Menu ...</div> -->
+    <Menu :nav="nav" :isOpen="true" />
   </div>
 </template>
 <script>
@@ -54,7 +54,7 @@ export default {
     position: fixed;
     top: 50px;
     .side-bar__title {
-      padding: .1em .6em;
+      // padding: .1em .6em;
       font-size: 13px;
     }
   }

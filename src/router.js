@@ -46,29 +46,13 @@ const router = new Router({
   ]
 })
 
-/**
- * 判斷 token 是否有過期,
- */
-// const isLogin1 = () => {
-//   if (!store.getters.isLogin && store.getters.token) { // 未登入但 localstorage 有 token時
-//     const params = {
-//       token: store.getters.token
-//     }
-//     apiUtils.get('/auth/signin.json', params, response => {
-//       return !!(response.auth); // 是否token 有過期
-//     });
-//   } else {
-//     return store.getters.isLogin;
-//   }
-// }
-
-router.beforeEach((to, from, next) => {
-  console.log('to=', to.fullPath, '| from=', from.fullPath, to.path);
-  const isLogin = store.getters.isLogin;
+const beforeEachEvent = () => router.beforeEach((to, from, next) => {
+  // console.log('to=', to.fullPath, '| from=', from.fullPath, to.path);
   const hasRequiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  if (to.path === '/login' && isLogin) { // 登入頁且已登入時
+  const hasLogin = store.getters.isLogin;
+  if (to.path === '/login' && hasLogin) { // 登入頁且已登入時
     next();
-  } else if (hasRequiresAuth && !isLogin) { // 須登入而未登入時
+  } else if (hasRequiresAuth && !hasLogin) { // 須登入而未登入時
     next({
       path: '/login',
       query: { redirect: to.fullPath }
@@ -76,6 +60,17 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-})
+});
+
+/**
+ * 判斷 token 是否有過期,
+ */
+if (!store.getters.isLogin && store.getters.token) { // 未登入但 localstorage 有 token時
+  store.dispatch('UserInfo').then(() => {
+    beforeEachEvent();
+  });
+} else { // 已登入 or 未登入
+  beforeEachEvent();
+}
 
 export default router

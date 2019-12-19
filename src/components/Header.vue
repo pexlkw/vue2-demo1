@@ -1,18 +1,18 @@
 <template>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <header>
       <div class="logo-bar">
-        <div class="logo"> LOGO </div>
+        <!-- <div class="logo"> LOGO </div> -->
+        <img src="//vuejs.org/images/logo.png" alt="" class="logo">
       </div>
       <div class="header text-right">
         <ul>
           <li class="title">權限管理系統</li>
           <li class="notice"> Notice</li>
-          <li><span class="default-img">A</span>Admin</li>
-          <li>Logout</li>
+          <li>
+            <span class="default-img">{{ userInfo().firstText}}</span>
+            {{ userInfo().allName }}
+          </li>
+          <li class="logout">Logout</li>
         </ul>
       </div>
     </header>
@@ -48,6 +48,16 @@ export default {
         children: null
       }]
     }
+  },
+  methods: {
+    userInfo () {
+      const user = {};
+      if (this.$store.state.user.userInfo) {
+        user.allName = this.$store.state.user.userInfo;
+        user.firstText = this.$store.state.user.userInfo.substr(0, 1);
+      }
+      return user;
+    }
   }
 
 }
@@ -64,6 +74,12 @@ export default {
   color: #fff;
   position: fixed;
   top: 0;
+  .logo {
+    height: 40px;
+    width: 40px;
+    margin: 5px auto;
+    display: block;
+  }
 }
 .header {
   width: calc(100vw - 200px);
