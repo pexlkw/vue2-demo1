@@ -48,8 +48,12 @@ table {
     background-color: #007bff;
     margin-right: .5em;
     }
-  }
+	}
 
-.modal {
-    // display: block;
+.alert {
+	margin: auto;
+	display: inline-block;
+	max-width: 80vw;
+	position: fixed;
+	top: 20px;
 }

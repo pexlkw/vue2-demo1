@@ -14,11 +14,11 @@ export default {
         text: 'Home',
         path: null,
         children: [{
-          text: 'Home-1',
+          text: '帳號管理',
           path: '/datatable',
           children: null
         }, {
-          text: 'Home-2',
+          text: '權限管理',
           path: '/about',
           children: null
         }]

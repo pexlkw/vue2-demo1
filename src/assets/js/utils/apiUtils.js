@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getToken } from './auth';
+import { openMsg } from '../components/alertEvent';
 
 let config = {
   timeout: 60 * 1000, // Timeout
@@ -14,41 +15,34 @@ const axiosInstanceApi = axios.create(config)
 let finishFunction = response => {
   return response
 }
-let errorFunction = error => {
-  console.log('error111ß', error);
+
+let requestPrepare = config => {
+  config.headers.Authorization = getToken();
+  return config;
+}
+
+let errorFunction = (error) => {
   if (error.response.status) {
     switch (error.response.status) {
-      // 401: 未登录
-      // 未登录则跳转登录页面，并携带当前页面的路径
-      // 在登录成功后返回当前页面，这一步需要在登录页操作。
-      case 401:
+      case 401: // 未登入
         console.log(401, error.message);
-        alert(error.message)
+        openMsg('登入失敗，請重新輸入帳號與密碼', 'alert-danger');
+        // alert(error.message)
         break
-        // 403 token过期
-        // 登录过期对用户进行提示
-        // 清除本地token和清空vuex中token对象
-        // 跳转登录页面
-      case 403:
+      case 403: // token 過期: 清除token -> 跳轉login
         console.log(403, error.message);
         alert(error.message)
         break
-        // 404请求不存在
-      case 404:
+      case 404: // 不存在
         console.log(404, error.message);
         alert(error.message)
         break
       default:
         console.log('a', error.message, error.status);
-        // alert(error.message)
         break
     }
     return Promise.reject(error.response);
   }
-}
-let requestPrepare = config => {
-  config.headers.Authorization = getToken();
-  return config;
 }
 
 axiosInstanceApi.interceptors.request.use(requestPrepare);

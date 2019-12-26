@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="card">
-        <h1>LOGIN <span>VEGETABLES</span></h1>
+        <h1>LOGIN <span>BETA</span></h1>
         <form >
             <div class="form-group text-left">
               <label for="exampleInputEmail1 ">帳號</label>
@@ -38,14 +38,17 @@ export default {
     }, // login click event
     // validEvent () {}, // 檢核
     sendEvent () {
-      console.log('aa');
       const params = {
         userAccount: this.$refs.userAccount.value, // 'ADMIN'
         password: this.$refs.password.value // 'welcome1'
       }
       this.$store.dispatch('Login', params).then(() => {
+        console.log('login', this.$router);
         this.$router.push(this.$route.query.redirect || '/'); // 回到上一頁或是首頁
       });
+    },
+    errorCallback () {
+
     }
   }
 }
