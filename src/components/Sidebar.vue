@@ -1,7 +1,7 @@
 <template>
   <div id="sidebar" class="side-bar">
     <!-- <div class="side-bar__title">Menu ...</div> -->
-    <Menu :nav="nav" :isOpen="true" />
+    <Menu :nav="nav" :isOpen="true" :nowPath="nowPath" />
   </div>
 </template>
 <script>
@@ -10,12 +10,18 @@ export default {
   name: 'Sidebar',
   data () {
     return {
+      nowPath: this.$route.path,
       nav: [{
         text: 'Home',
         path: null,
+        isOpen: false,
         children: [{
           text: '帳號管理',
           path: '/datatable',
+          children: null
+        }, {
+          text: '權限管理',
+          path: '/about',
           children: null
         }, {
           text: '權限管理',
@@ -25,20 +31,36 @@ export default {
       }, {
         text: 'About',
         path: '/about',
-        children: null
+        isOpen: false,
+        children: [{
+          text: '帳號管理',
+          path: '/datatable',
+          children: null
+        }]
       }, {
         text: 'Item1',
         path: '/about',
+        isOpen: false,
         children: null
       }, {
         text: 'Item2',
         path: '/about',
+        isOpen: false,
         children: null
       }]
     }
   },
   components: {
     Menu
+  },
+  mounted () {
+    this.initOpen();
+  },
+  methods: {
+    initOpen () {
+      const isActiveElement = document.querySelector('.is-active');
+      isActiveElement.closest('ul').classList.add('is-open');
+    }
   }
 }
 </script>
@@ -53,6 +75,7 @@ export default {
     color: #fff;
     position: fixed;
     top: 50px;
+    padding: 0 8px;
     .side-bar__title {
       // padding: .1em .6em;
       font-size: 13px;

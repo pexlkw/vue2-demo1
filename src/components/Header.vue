@@ -7,12 +7,12 @@
       <div class="header text-right">
         <ul>
           <li class="title">權限管理系統</li>
-          <li class="notice"> Notice</li>
+          <li class="notice btn"><i class="fas fa-bell"></i></li>
           <li>
             <span class="default-img">{{ userInfo().firstText}}</span>
             {{ userInfo().allName }}
           </li>
-          <li class="logout">Logout</li>
+          <li class="logout btn" @click="singOut"><i class="fas fa-sign-out-alt"></i></li>
         </ul>
       </div>
     </header>
@@ -21,33 +21,7 @@
 export default {
   name: 'Header',
   data () {
-    return {
-      nav: [{
-        text: 'Home',
-        path: null,
-        children: [{
-          text: 'Home-1',
-          path: '/',
-          children: null
-        }, {
-          text: 'Home-2',
-          path: '/about',
-          children: null
-        }]
-      }, {
-        text: 'About',
-        path: '/about',
-        children: null
-      }, {
-        text: 'Item1',
-        path: '/about',
-        children: null
-      }, {
-        text: 'Item2',
-        path: '/about',
-        children: null
-      }]
-    }
+    return {}
   },
   methods: {
     userInfo () {
@@ -57,6 +31,11 @@ export default {
         user.firstText = this.$store.state.user.userInfo.substr(0, 1);
       }
       return user;
+    },
+    singOut () {
+      this.$store.dispatch('SignOut').then(() => {
+        this.$router.push({ path: 'Login' });
+      });
     }
   }
 
@@ -94,8 +73,16 @@ export default {
   }
   li {
     display: inline-block;
-    margin-right: 1em;
+    margin-right: .5em;
+    min-width: 40px;
+    text-align: center;
     list-style: none;
+    &.btn {
+      cursor: pointer;
+      &:hover {
+        background-color: #e1eae3;
+      }
+    }
   }
   .title {
     position: absolute;

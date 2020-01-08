@@ -42,6 +42,18 @@ const router = new Router({
         name: 'about',
         component: () => import('./views/About.vue')
       }]
+    },
+    {
+      path: '/404',
+      name: '404',
+      meta: {
+        requiresAuth: false
+      },
+      component: () => import('./views/error/404.vue')
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
   ]
 })
@@ -49,27 +61,25 @@ const router = new Router({
 /**
  * 判斷 token 是否有過期,
  */
-const getLoginEvent = new Promise((resolve, reject) => {
-  console.log('Promise 開始')
-  if (!store.getters.isLogin && store.getters.token) {
-    store.dispatch('UserInfo').then(() => {
-      resolve(store.getters.isLogin);
-    });
-  } else {
-    // 回傳失敗
-    reject(store.getters.isLogin);
-  }
-});
+// const getLoginEvent = new Promise((resolve, reject) => {
+//   if (!store.getters.isLogin && store.getters.token) {
+//     store.dispatch('UserInfo').then(() => {
+//       resolve(store.getters.isLogin);
+//     });
+//   } else {
+//     // 回傳失敗
+//     reject(store.getters.isLogin);
+//   }
+// });
 
 router.beforeEach((to, from, next) => {
-  const hasRequiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const hasLogin = store.getters.isLogin;
+  console.log(store.getters);
   if (to.path === '/login' && hasLogin) { // 登入頁且已登入時
-    console.log('login', hasRequiresAuth, hasLogin);
+    console.log('loginnnnnn');
     next();
-  } else if (hasRequiresAuth && !hasLogin) { // 須登入而未登入時
-    console.log('testtt');
-    getLoginEvent.then((data) => {
+  } else if (to.matched.some(record => record.meta.requiresAuth) && !hasLogin) { // 須登入而未登入時
+    store.dispatch('UserInfo').then(() => {
       next();
     }).catch(() => {
       next({
@@ -78,7 +88,6 @@ router.beforeEach((to, from, next) => {
       })
     })
   } else { // 不須登入頁
-    console.log('next');
     next();
   }
 });

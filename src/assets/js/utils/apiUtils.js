@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import router from '@/router'
 import { getToken } from './auth';
 import { openMsg } from '../components/alertEvent';
 
@@ -26,7 +27,12 @@ let errorFunction = (error) => {
     switch (error.response.status) {
       case 401: // 未登入
         console.log(401, error.message);
-        openMsg('登入失敗，請重新輸入帳號與密碼', 'alert-danger');
+        if (router.currentRoute.path !== '/login') {
+          console.log('login', router.query);
+          // router.puth('login');
+        } else {
+          openMsg('登入失敗，請重新輸入帳號與密碼', 'alert-danger');
+        }
         // alert(error.message)
         break
       case 403: // token 過期: 清除token -> 跳轉login

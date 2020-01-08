@@ -1,4 +1,4 @@
-import { getToken, setToken } from '@/assets/js/utils/auth';
+import { getToken, setToken, removeToken } from '@/assets/js/utils/auth';
 import { apiUtils } from '@/assets/js/utils/apiUtils';
 
 const user = {
@@ -13,7 +13,7 @@ const user = {
     },
     SET_USERINFO: (state, userInfo) => {
       state.userInfo = userInfo;
-      state.isLogin = true;
+      state.isLogin = !!userInfo;
     }
   },
   actions: {
@@ -35,7 +35,15 @@ const user = {
           resolve();
         })
       })
-    } // userinfo end
+    },
+    SignOut ({ commit }) { // 登出
+      return new Promise((resolve) => {
+        removeToken();
+        commit('SET_TOKEN', '');
+        commit('SET_USERINFO', '');
+        resolve();
+      })
+    } // signOut end
   }
 }
 export default user;

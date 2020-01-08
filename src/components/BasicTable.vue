@@ -56,7 +56,10 @@
                   type="button"
                   class="btn btn-secondary"
                   :data-type="btnItem"
-                >{{btnItem}}</button>
+                >
+                  <i class="fas"
+                  :class="{'fa-pen': btnItem === 'edit', 'fa-trash-alt': btnItem === 'delete', 'fa-copy': btnItem === 'copy', 'fa-eye': btnItem === 'view'}"></i>
+                </button>
               </div>
             </td>
           </tr>
