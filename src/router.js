@@ -58,25 +58,9 @@ const router = new Router({
   ]
 })
 
-/**
- * 判斷 token 是否有過期,
- */
-// const getLoginEvent = new Promise((resolve, reject) => {
-//   if (!store.getters.isLogin && store.getters.token) {
-//     store.dispatch('UserInfo').then(() => {
-//       resolve(store.getters.isLogin);
-//     });
-//   } else {
-//     // 回傳失敗
-//     reject(store.getters.isLogin);
-//   }
-// });
-
 router.beforeEach((to, from, next) => {
   const hasLogin = store.getters.isLogin;
-  console.log(store.getters);
   if (to.path === '/login' && hasLogin) { // 登入頁且已登入時
-    console.log('loginnnnnn');
     next();
   } else if (to.matched.some(record => record.meta.requiresAuth) && !hasLogin) { // 須登入而未登入時
     store.dispatch('UserInfo').then(() => {
