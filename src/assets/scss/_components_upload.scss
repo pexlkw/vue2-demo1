@@ -1,0 +1,34 @@
+@import './_settings.scss';
+
+.user-img {
+  cursor: pointer;
+  .upload-profile-pic {
+    position: absolute;
+    left: 60px;
+    bottom: 6px;
+    font-size: 14px;
+    color: $color-primary;
+    background-color: $color-gray-background;
+    padding: .3em;
+    box-shadow: 0px 0px 4px $color-black;
+  }
+  &:hover .upload-profile-pic {
+    color: $color-primary-dark;
+  }
+}
+.custom-file-input:lang(en)~.custom-file-label::after {
+  content: attr(data-text);
+}
+
+.prview-pic {
+ &.user-pic {
+   width: 120px;
+   height: 120px;
+   background-color: $color-gray-background;
+   margin: auto;
+   img {
+     max-width: 120px;
+     max-height: 120px;
+   }
+ }
+}

@@ -58,7 +58,8 @@
                   :data-type="btnItem"
                 >
                   <i class="fas"
-                  :class="{'fa-pen': btnItem === 'edit', 'fa-trash-alt': btnItem === 'delete', 'fa-copy': btnItem === 'copy', 'fa-eye': btnItem === 'view'}"></i>
+                  :class="{'fa-pen': btnItem === 'edit', 'fa-trash-alt': btnItem === 'delete', 'fa-copy': btnItem === 'copy', 'fa-eye': btnItem === 'view'}"
+                  @click="openModelType(btnItem, item[config.key])"></i>
                 </button>
               </div>
             </td>
@@ -106,30 +107,16 @@
     <template v-else-if="table.status !== 'success'">
       <div class="text-center">{{ table.message }}</div>
     </template>
-
-    <!-- delete action -->
-    <Modal :id="deleteAction">
-      <template v-slot:header>
-        <h5>刪除</h5>
-      </template>
-      <p>您是否確定要刪除此項目</p>
-      <template v-slot:footer>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">確認</button>
-      </template>
-    </Modal>
   </div>
 </template>
 
 <script>
-import $ from 'jquery';
-import Modal from '@/components/Modal.vue';
 
 export default {
   name: 'BasicTable',
   props: ['table', 'config'],
   components: {
-    Modal
+    // Modal
   },
   data () {
     return {
@@ -153,11 +140,8 @@ export default {
     selected () {
       this.checkedAll = false;
     },
-    openModel () {
-      $('#deleteAction').modal('show');
-    },
-    openModelType (type) {
-      this.$emit('modelType', type);
+    openModelType (type, id) {
+      this.$emit('modelType', type, id);
     },
     setParem (type, parems) {
       let getParem = {};

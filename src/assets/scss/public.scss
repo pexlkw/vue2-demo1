@@ -62,3 +62,17 @@ table {
 	align-items: center;
 	justify-content: center;
 }
+.table td, .table th {
+	padding: .5rem;
+}
+body {
+	background-color: #f7f7f8;
+}
+
+@import './_components_form.scss';
+@import './_components_modal.scss';
+@import './_components_upload.scss';
+
+.is-hidden {
+	display: none !important;
+}

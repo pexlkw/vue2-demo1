@@ -17,11 +17,11 @@ export default {
         isOpen: false,
         children: [{
           text: '帳號管理',
-          path: '/datatable',
+          path: '/user-manage',
           children: null
         }, {
-          text: '權限管理',
-          path: '/about',
+          text: '使用者中心',
+          path: '/user-profile',
           children: null
         }, {
           text: '權限管理',
@@ -34,7 +34,7 @@ export default {
         isOpen: false,
         children: [{
           text: '帳號管理',
-          path: '/datatable',
+          path: '/user-manage',
           children: null
         }]
       }, {

@@ -43,7 +43,7 @@ export default {
         password: this.$refs.password.value // 'welcome1'
       }
       this.$store.dispatch('Login', params).then(() => {
-        this.$router.push(this.$route.query.redirect || '/datatable'); // 回到上一頁或是首頁
+        this.$router.push(this.$route.query.redirect || '/user-manage'); // 回到上一頁或是首頁
       });
     },
     errorCallback () {

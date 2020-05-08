@@ -30,17 +30,17 @@ const router = new Router({
       children: [{
         path: '', // 預設的頁面
         name: 'home',
-        component: () => import('./views/Datatable.vue')
+        component: () => import('./views/UserManage.vue')
       },
       {
-        path: '/datatable',
-        name: 'datatable',
-        component: () => import('./views/Datatable.vue')
+        path: '/user-manage',
+        name: 'user-manage',
+        component: () => import('./views/UserManage.vue')
       },
       {
-        path: '/about',
-        name: 'about',
-        component: () => import('./views/About.vue')
+        path: '/user-profile',
+        name: 'user-profile',
+        component: () => import('./views/UserProfile.vue')
       }]
     },
     {

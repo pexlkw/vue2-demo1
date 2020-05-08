@@ -13,15 +13,6 @@
               <label for="idNo">名稱</label>
               <input type="text" class="form-control" id="displayName" />
             </div>
-            <!-- <div class="col-sm-6">
-              <label for="deparment">部門</label>
-              <select class="custom-select" id="deparment">
-                <option selected>Open this select menu</option>
-                <option value="1">業務部</option>
-                <option value="2">工程部</option>
-                <option value="3">人事部</option>
-              </select>
-            </div> -->
           </div>
           <div class="btn-box text-center">
             <button class="btn btn-primary" type="button">submit</button>
@@ -38,34 +29,32 @@
           @conditionParem="searchAction" />
       </div>
     </section>
-    <!-- model content: add/edit/view -->
-    <Modal id="dataAction" v-if="modalInfo.isShow">
-      <template v-slot:header>
-        <h5>新增</h5>
-      </template>
-      <div>test</div>
-      <template v-slot:footer>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">確認</button>
-      </template>
-    </Modal>
+    <DeleteModal
+      :modalInfo="modalInfo"
+      @static="searchAction"
+      @modalType="updateModalType">
+    </DeleteModal>
+    <EditModal
+      :modalInfo="modalInfo"
+      @static="searchAction"
+      @modalType="updateModalType">
+    </EditModal>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import BasicTable from '@/components/BasicTable.vue';
-import Modal from '@/components/Modal.vue';
-// import axios from 'axios';
-import $ from 'jquery';
-import TableFilderInfo from '@/assets/json/dataTable/filderInfo.json';
-// import { apiUtils } from '@/assets/js/utils/apiUtils'; // ajax
+import BasicTable from '@/components/BasicTable.vue'
+import DeleteModal from '@/components/modal/Delete.vue'
+import EditModal from '@/components/modal/Edit.vue'
+import TableFilderInfo from '@/assets/json/userManage/filderInfo.json'
 
 export default {
-  name: 'Datatable',
+  name: 'UserManage',
   components: {
     BasicTable,
-    Modal
+    DeleteModal,
+    EditModal
   },
   data () {
     return {
@@ -84,13 +73,15 @@ export default {
       modalInfo: {
         // popup 設定
         isShow: false,
-        type: 'add' // add, edit, view
+        type: '', // add, edit, view
+        title: ''
       },
       tabsInfo: {
         // tabs 設定
         item: ['帳號維護', '所屬群組', '所屬組織'],
         isActive: 0
-      }
+      },
+      actionForm: {}
     };
   },
   mounted () {
@@ -99,28 +90,68 @@ export default {
       size: 10,
       sort: 'empNo,desc'
     }
-    this.getData(this.conditionParems);
+    this.getData(this.conditionParems)
   },
-  methods: {
+  methods: { // /api/authuser/editUser
     getData (parems) { // page=0&size=10&sort=empNo,desc
       this.$apiUtils.get('/authuser/getAuthUserList', parems, resp => {
         // 接收成功
         this.table = Object.assign({}, resp);
-        this.table.status = resp.status ? resp.status : 'success';
+        this.table.status = resp.status ? resp.status : 'success'
       });
     },
-    openModelType (type) {
-      this.modalInfo.isShow = true;
-      this.modalInfo.type = type;
+    openModelType (type, id) {
+      this.modalInfo.id = (id) || null
+      this.modalInfo.fieldInfo = TableFilderInfo
+      this.modalInfo.actionUrl = '/authuser/saveUser'
+      const getDetal = () => {
+        const params = {
+          userId: id
+        }
+        this.$apiUtils.get('/authuser/getAuthUser', params, resp => {
+          this.modalInfo.detal = resp
+          for (let prop in this.modalInfo.detal) {
+            if (!this.modalInfo.detal[prop]) delete this.modalInfo.detal[prop]
+          }
+          if (type === 'copy') delete this.modalInfo.detal.userId
+          this.modalInfo.type = type
+        })
+      }
+      switch (type) {
+        case 'delete':
+          this.modalInfo.title = '刪除'
+          this.modalInfo.type = type
+          this.modalInfo.actionUrl = `/authuser/deleteAuthUser?userId=${id}`
+          break
+        case 'edit':
+          this.modalInfo.title = '修改'
+          getDetal()
+          break
+        case 'add':
+          this.modalInfo.title = '新增'
+          this.modalInfo.type = type
+          this.modalInfo.detal = {}
+          break
+        case 'view':
+          this.modalInfo.title = '瀏覽'
+          getDetal()
+          break
+        case 'copy':
+          this.modalInfo.title = '複制'
+          getDetal()
+          break
+      }
+
+      if (type !== 'delete' && type !== 'add') {
+        //
+      }
+    },
+    updateModalType (type) {
+      this.modalInfo.type = type
     },
     searchAction (getParem) {
-      const parems = Object.assign({}, this.conditionParems, getParem);
-      this.getData(parems);
-    }
-  },
-  updated () {
-    if (this.modalInfo.isShow) {
-      $('#dataAction').modal('show')
+      const parems = (getParem === 'success') ? this.conditionParems : Object.assign({}, this.conditionParems, getParem)
+      this.getData(parems)
     }
   }
 }

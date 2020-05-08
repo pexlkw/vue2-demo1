@@ -2,10 +2,6 @@
   <div>
     <Header />
     <Sidebar />
-    <!-- <div class="home">
-      <img alt="Vue logo" src="../assets/logo.png">
-      <HelloWorld msg="Welcome to Your Vue.js App"/>
-    </div> -->
     <main class="main">
       <router-view />
     </main>
@@ -14,7 +10,7 @@
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
+import Header from '@/components/header/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
 
 export default {

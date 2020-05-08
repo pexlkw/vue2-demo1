@@ -1,0 +1,32 @@
+@import './_settings.scss';
+
+*:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+input, textarea, select {
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+.form-group {
+  margin-bottom: .5rem;
+  font-size: $font-s;
+  .text-view {
+    &:before {
+      content: ':';
+      display: inline-block;
+      width: 12px;
+    }
+  }
+}
+.is-required { // 必填
+  &:after {
+    content: '*';
+    color: $color-red;
+    margin-left: 2px;
+  }
+}
+.form-control.is-invalid {
+  border-color: $color-red;
+}

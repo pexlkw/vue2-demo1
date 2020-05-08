@@ -17,7 +17,7 @@ let finishFunction = response => {
   return response
 }
 
-let requestPrepare = config => {
+let requestPrepare = (config) => {
   config.headers.Authorization = getToken();
   return config;
 }
@@ -26,7 +26,7 @@ let errorFunction = (error) => {
   if (error.response.status) {
     switch (error.response.status) {
       case 401: // 未登入
-        if (error.response.data.path === '/api/auth/signin') {
+        if (error.response.data.path === '/api/auth/signin') { // 登入頁錯誤訊息
           openAlertMsg('登入失敗，請重新輸入帳號與密碼', 'alert-danger');
         } else {
           router.push('/login');
@@ -68,7 +68,7 @@ export const apiUtils = {
         }
       })
   },
-  async post (name, model, callback, errorCallback) {
+  async post (name, model, callback, errorCallback, completeCallback) {
     return axiosInstanceApi.post(name, model).then(response => {
       if (callback) {
         callback(response.data)
@@ -77,6 +77,8 @@ export const apiUtils = {
       if (errorCallback) {
         errorCallback(e.response)
       }
+    }).then(() => {
+      if (completeCallback) completeCallback();
     })
   }
 };

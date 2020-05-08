@@ -4,7 +4,7 @@
     <div class="notfound-404"><p>404</p></div>
     <div class="notfound-title">SORRY! PAGE NOT FOUND</div>
     <p class="notfound-text">很抱歉，您正在尋找的頁面不存在或是已刪除，暫時不能使用。</p>
-    <router-link :to="'datatable'" class="notfound-btn">回 首 頁</router-link>
+    <router-link :to="'user-manage'" class="notfound-btn">回 首 頁</router-link>
   </div>
 </section>
 </template>

@@ -1,0 +1,123 @@
+[{
+    "value": "userId",
+    "label": "user ID",
+    "isShow": false,
+    "info": {
+        "type": "input",
+        "required": false,
+        "value": "",
+        "isShow": false
+    }
+},{
+    "value":"userAccount",
+    "label":"帳號",
+    "isShow": true,
+    "info": {
+        "type": "input",
+        "required": true,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"displayName",
+    "label":"名稱",
+    "isShow": true,
+    "info": {
+        "type": "input",
+        "required": true,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"email",
+    "label":"e-mail",
+    "isShow": true,
+    "info": {
+        "type": "input",
+        "required": true,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"sourceType",
+    "label":"source Type",
+    "isShow":true,
+    "info": {
+        "type": "lov",
+        "item": [{"key": "app", "value": "APP"},{"key":"web", "value":"WEB"}],
+        "required": false,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"deviceToken",
+    "label":"device Token",
+    "isShow": false,
+    "info": {
+        "type": "input",
+        "required": false,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"deviceName",
+    "label":"device Name",
+    "isShow": false,
+    "info": {
+        "type": "input",
+        "required": false,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"isActive",
+    "label":"狀態",
+    "isShow":false,
+    "info": {
+        "type": "rediobutton",
+        "item": [{"key": true, "value": "是"},{"key": false, "value": "否"}],
+        "required": true,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"empNo",
+    "label":"員工編號",
+    "isShow":true,
+    "info": {
+        "type": "input",
+        "required": false,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"empTitle",
+    "label":"職稱",
+    "isShow":true,
+    "info": {
+        "type": "input",
+        "required": false,
+        "value": "",
+        "isShow": true
+    }
+},{
+    "value":"password",
+    "label":"密碼",
+    "isShow":false,
+    "info": {
+        "type": "password",
+        "required": true,
+        "value": "",
+        "isShow": false
+    }
+},{
+    "value":"memo",
+    "label":"備註",
+    "isShow": true,
+    "info": {
+        "type": "textarea",
+        "required": false,
+        "value": "",
+        "isShow": true
+    }
+}]

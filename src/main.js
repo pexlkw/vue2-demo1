@@ -10,7 +10,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; // import fontawesome ic
 import './assets/scss/public.scss' // 共用scss
 
 import { apiUtils } from '@/assets/js/utils/apiUtils'; // 引用封裝後的 axios
-Vue.prototype.$apiUtils = apiUtils; // 全域使用
+import { openAlertMsg } from '@/assets/js/components/alertEvent'; // alert
+
+// 全域使用
+Vue.prototype.$apiUtils = apiUtils;
+Vue.prototype.$openAlertMsg = openAlertMsg;
 
 Vue.config.productionTip = false
 
